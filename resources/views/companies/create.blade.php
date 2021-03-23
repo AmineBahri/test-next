@@ -9,6 +9,7 @@
         <div class="col-md-8">
           <div class="card p-3">
             <h3 class="card-title">Ajouter une companie</h3>
+            <a href="{{route('companies.import')}}" class="nav-link my-2">Ajouter à partir fichier excel</a>
             <div class="card-body">
               <form method="post" action="{{route('companies.store')}}">
                 @csrf

@@ -47,6 +47,10 @@ Route::post('/regionsearch','RegionController@search')->name('regions.search');
 
 Route::get('/auteurregion', 'RegionController@auteurRegion')->name('regions.role');
 
+Route::get('/importregion', 'RegionController@importRegion')->name('regions.import');
+
+Route::post('/regionexcel','RegionController@regionImportedByExcel')->name('regions.excel');
+
 //companies route
 
 Route::resource('companies', 'CompanyController');
@@ -55,6 +59,10 @@ Route::post('/companiesearch','CompanyController@search')->name('companies.searc
 
 Route::get('/auteurcompanie', 'CompanyController@auteurCompany')->name('companies.role');
 
+Route::get('/importcompanie', 'CompanyController@importCompany')->name('companies.import');
+
+Route::post('/companieexcel','CompanyController@companyImportedByExcel')->name('companies.excel');
+
 //customerstype route
 
 Route::resource('customerstype', 'CustomerTypeController');
@@ -62,6 +70,10 @@ Route::resource('customerstype', 'CustomerTypeController');
 Route::post('/customerstypesearch','CustomerTypeController@search')->name('customerstype.search');
 
 Route::get('/auteurcustomertype', 'CustomerTypeController@auteurCustomerType')->name('customerstype.role');
+
+Route::get('/importcustomertype', 'CustomerTypeController@importCustomerType')->name('customerstype.import');
+
+Route::post('/customertypeexcel','CustomerTypeController@customerTypeImportedByExcel')->name('customerstype.excel');
 
 //municipalites route
 

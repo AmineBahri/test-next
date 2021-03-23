@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Region;
+use Excel;
+use App\Imports\RegionImport;
 
 class RegionController extends Controller
 {
@@ -183,5 +185,32 @@ class RegionController extends Controller
     public function auteurRegion()
     {
         return redirect('/regions')->with(["errorLink" => "Vous n'avez pas le role de faire cette méthode"]);
+    }
+
+    /* méthode permet d'imprter des données à partir de fichier excel vers la BD*/
+
+    public function importRegion()
+    {
+      if (auth()->user()->roles === 'admin') 
+      {
+        return view('regions.import');
+      }
+      elseif (auth()->user()->roles === 'user' || auth()->user()->roles === 'auteur' || auth()->user()->roles === 'superviseur')
+        {
+            return redirect('/home')->with(["errorLink" => "Vous n'avez pas le role de faire cette méthode"]);
+        }
+    }
+
+    public function RegionImportedByExcel(Request $request)
+    {
+      if (auth()->user()->roles === 'admin') 
+      {
+        Excel::import(new RegionImport,$request->file);
+        return redirect('/regions')->withSuccess("Données importées d'excel avec succès");
+      }
+      elseif (auth()->user()->roles === 'user' || auth()->user()->roles === 'auteur' || auth()->user()->roles === 'superviseur')
+        {
+            return redirect('/home')->with(["errorLink" => "Vous n'avez pas le role de faire cette méthode"]);
+        }
     }
 }

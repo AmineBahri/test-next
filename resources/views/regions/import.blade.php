@@ -8,16 +8,13 @@
         </div>
         <div class="col-md-8">
           <div class="card p-3">
-            <h3 class="card-title">Ajouter une région</h3>
-            <a href="{{route('regions.import')}}" class="nav-link my-2">Ajouter à partir fichier excel</a>
+            <h3 class="card-title">Importer des données à partir des fichiers excel</h3>
             <div class="card-body">
-              <form method="post" action="{{route('regions.store')}}">
+              <form method="POST" action="{{route('regions.excel')}}" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group">
-                  <input type="text" name="name_fr" placeholder="Nom français" class="form-control">
-                </div>
-                <div class="form-group">
-                  <input type="text" name="name_ar" placeholder="Nom arabe" class="form-control">
+                  <label for="file">Choisir un fichier</label>
+                  <input type="file" name="file" class="form-control">
                 </div>
                 <div class="form-group">
                   <button type="submit" class="btn btn-primary">

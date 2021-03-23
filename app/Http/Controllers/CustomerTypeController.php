@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\CustomerType; 
+use App\CustomerType;
+use Excel;
+use App\Imports\CustomerTypeImport; 
 
 class CustomerTypeController extends Controller
 {
@@ -182,5 +184,32 @@ class CustomerTypeController extends Controller
     public function auteurCustomerType()
     {
         return redirect('/customerstype')->with(["errorLink" => "Vous n'avez pas le role de faire cette méthode"]);
+    }
+
+    /* méthode permet d'imprter des données à partir de fichier excel vers la BD*/
+
+    public function importCustomerType()
+    {
+      if (auth()->user()->roles === 'admin') 
+      {
+        return view('customerstype.import');
+      }
+      elseif (auth()->user()->roles === 'user' || auth()->user()->roles === 'auteur' || auth()->user()->roles === 'superviseur')
+        {
+            return redirect('/home')->with(["errorLink" => "Vous n'avez pas le role de faire cette méthode"]);
+        }
+    }
+
+    public function customerTypeImportedByExcel(Request $request)
+    {
+      if (auth()->user()->roles === 'admin') 
+      {
+        Excel::import(new CustomerTypeImport,$request->file);
+        return redirect('/customerstype')->withSuccess("Données importées d'excel avec succès");
+      }
+      elseif (auth()->user()->roles === 'user' || auth()->user()->roles === 'auteur' || auth()->user()->roles === 'superviseur')
+        {
+            return redirect('/home')->with(["errorLink" => "Vous n'avez pas le role de faire cette méthode"]);
+        }
     }
 }

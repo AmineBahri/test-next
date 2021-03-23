@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Company;
+use Excel;
+use App\Imports\CompanyImport;
 
 class CompanyController extends Controller
 {
@@ -186,5 +188,32 @@ class CompanyController extends Controller
     public function auteurCompany()
     {
         return redirect('/companies')->with(["errorLink" => "Vous n'avez pas le role de faire cette méthode"]);
+    }
+
+    /* méthode permet d'imprter des données à partir de fichier excel vers la BD*/
+
+    public function importCompany()
+    {
+      if (auth()->user()->roles === 'admin') 
+      {
+        return view('companies.import');
+      }
+      elseif (auth()->user()->roles === 'user' || auth()->user()->roles === 'auteur' || auth()->user()->roles === 'superviseur')
+        {
+            return redirect('/home')->with(["errorLink" => "Vous n'avez pas le role de faire cette méthode"]);
+        }
+    }
+
+    public function companyImportedByExcel(Request $request)
+    {
+      if (auth()->user()->roles === 'admin') 
+      {
+        Excel::import(new CompanyImport,$request->file);
+        return redirect('/companies')->withSuccess("Données importées d'excel avec succès");
+      }
+      elseif (auth()->user()->roles === 'user' || auth()->user()->roles === 'auteur' || auth()->user()->roles === 'superviseur')
+        {
+            return redirect('/home')->with(["errorLink" => "Vous n'avez pas le role de faire cette méthode"]);
+        }
     }
 }
