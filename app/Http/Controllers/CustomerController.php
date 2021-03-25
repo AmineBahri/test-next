@@ -9,6 +9,8 @@ use App\CustomerType;
 use App\Municipalite;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Auth;
+use Excel;
+use App\Imports\CustomerImport;
 
 class CustomerController extends Controller
 {
@@ -212,5 +214,32 @@ class CustomerController extends Controller
     public function auteurCustomer()
     {
         return redirect('/customers')->with(["errorLink" => "Vous n'avez pas le role de faire cette méthode"]);
+    }
+
+    /* méthode permet d'imprter des données à partir de fichier excel vers la BD*/
+
+    public function importCustomers()
+    {
+      if (auth()->user()->roles === 'admin') 
+      {
+        return view('customers.import');
+      }
+      elseif (auth()->user()->roles === 'user' || auth()->user()->roles === 'auteur' || auth()->user()->roles === 'superviseur')
+        {
+            return redirect('/home')->with(["errorLink" => "Vous n'avez pas le role de faire cette méthode"]);
+        }
+    }
+
+    public function customersImportedByExcel(Request $request)
+    {
+      if (auth()->user()->roles === 'admin') 
+      {
+        Excel::import(new CustomerImport,$request->file);
+        return redirect('/customers')->withSuccess("Données importées d'excel avec succès");
+      }
+      elseif (auth()->user()->roles === 'user' || auth()->user()->roles === 'auteur' || auth()->user()->roles === 'superviseur')
+        {
+            return redirect('/home')->with(["errorLink" => "Vous n'avez pas le role de faire cette méthode"]);
+        }
     }
 }

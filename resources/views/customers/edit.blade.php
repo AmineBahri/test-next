@@ -8,7 +8,7 @@
         </div>
         <div class="col-md-8">
           <div class="card p-3">
-            <h3 class="card-title">Modifier le customer {{$customer->name}}</h3>
+            <h3 class="card-title">{{ __('messages.Modifier le customer')}} {{$customer->name}}</h3>
             <div class="card-body">
 		  	<form method="post" action="{{url('updatecustomer',$customer->id)}}" enctype="multipart/form-data">
                 @csrf
@@ -39,7 +39,7 @@
                 <div class="form-group">
                   <select name="customerstype_id" class="form-control">
                     <option value="" selected disabled>
-                      Choisir un customer type
+                      {{ __('messages.Choisir un customer type')}}
                     </option>
                     @foreach($customerstype as $customer_type)
                       <option {{$customer->customertype_id === $customer_type->id ? "selected" : ""}} value="{{$customer_type->id}}">
@@ -51,7 +51,7 @@
                 <div class="form-group">
                   <select name="companie_id" class="form-control">
                     <option value="" selected disabled>
-                      Choisir une companie
+                      {{ __('messages.Choisir une companie')}}
                     </option>
                     @foreach($companies as $company)
                       <option {{$customer->companie_id === $company->id ? "selected" : ""}} value="{{$company->id}}">
@@ -63,7 +63,7 @@
                 <div class="form-group">
                   <select name="municipalite_id" class="form-control">
                     <option value="" selected disabled>
-                      Choisir une municipalite
+                      {{ __('messages.Choisir une municipalite')}}
                     </option>
                     @foreach($municipalites as $municipalite)
                       <option {{$customer->municipalite_id === $municipalite->id ? "selected" : ""}} value="{{$municipalite->id}}">
@@ -74,7 +74,7 @@
                 </div>
                 <div class="form-group">
                   <button type="submit" class="btn btn-primary">
-                    Validate
+                    {{ __('messages.Validate')}}
                   </button>
                 </div>
               </form>

@@ -6,33 +6,33 @@
       <div class="row">
         <div class="col">
           <a href="{{route('home')}}" class="list-group-item font-weight-bold list-group-item-action">
-          Dashboard
+          {{ __('messages.Dashboard') }}
           </a>
         </div>
         <div class="col">
           <a href="{{route('regions.index')}}" class="list-group-item font-weight-bold list-group-item-action">
-          Regions
+          {{ __('messages.Regions') }}
           </a>
         </div>
         <div class="col">
           <a href="{{route('companies.index')}}" class="list-group-item font-weight-bold list-group-item-action">
-          Companies
+          {{ __('messages.Municipalites') }}
           </a>
         </div>
         <div class="col">
           <a href="{{route('municipalites.index')}}" class="list-group-item font-weight-bold list-group-item-action">
-          Municipalites
-          </a>
-        </div>
-        <div class="col">
-          <a href="{{route('home')}}" class="list-group-item font-weight-bold list-group-item-action">
-          Customers
+          {{ __('messages.Companies') }}
           </a>
         </div>
         <div class="col">
           <a href="{{route('customerstype.index')}}" class="list-group-item font-weight-bold list-group-item-action">
-          Customers Type
+          {{ __('messages.Customers Type') }}
          </a>
+        </div>
+        <div class="col">
+          <a href="{{route('home')}}" class="list-group-item font-weight-bold list-group-item-action">
+          {{ __('messages.Customers') }}
+          </a>
         </div>
       </div>
         <div class="col-md-12">
@@ -42,19 +42,21 @@
                     <table class="table table-nover">
                        <thead>
                          <tr>
-                            <th>Id</th>
-                            <th>Name</th>
-                            <th>Cin</th>
-                            <th>Address</th>
-                            <th>Birthday</th>
-                            <th>Phone</th>
-                            <th>Image</th>
-                            <th>Parents Name</th>
-                            <th>Customer Type</th>
-                            <th>Company</th>
-                            <th>Municipalite</th>
-                            @if(auth()->user()->roles === 'admin')
-                            <th>Actions</th>
+                            <th>{{ __('messages.Id') }}</th>
+                            <th>{{ __('messages.Name') }}</th>
+                            <th>{{ __('messages.Cin') }}</th>
+                            <th>{{ __('messages.Address') }}</th>
+                            <th>{{ __('messages.Birthday') }}</th>
+                            <th>{{ __('messages.Phone') }}</th>
+                            <th>{{ __('messages.Image') }}</th>
+                            <th>{{ __('messages.Parents Name') }}</th>
+                            <th>{{ __('messages.Customer Type') }}</th>
+                            <th>{{ __('messages.Company') }}</th>
+                            <th>{{ __('messages.Municipalite') }}</th>
+                            @if(auth()->user()->roles === 'admin' || auth()->user()->roles === 'superviseur')
+                            <th>{{ __('messages.Actions') }}</th>
+                            @elseif(auth()->user()->roles === 'auteur')
+                            <th>{{ __('messages.Actions') }}</th>
                             @endif
                          </tr>
                         </thead>

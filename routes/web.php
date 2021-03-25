@@ -12,6 +12,12 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::group(
+[
+	'prefix' => LaravelLocalization::setLocale(),
+	'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]
+], function()
+{
 
 Route::get('/', function () {
     return view('welcome');
@@ -34,6 +40,10 @@ Route::post('/updatecustomer/{id}', 'CustomerController@updateCustomer');
 Route::get('/deletecustomer/{id}', 'CustomerController@deleteCustomer');
 
 Route::get('/auteurrole', 'CustomerController@auteurCustomer');
+
+Route::get('/importcustomers', 'CustomerController@importCustomers')->name('customers.import');
+
+Route::post('/customersexcel','CustomerController@customersImportedByExcel')->name('customers.excel');
 
 Auth::routes();
 
@@ -82,3 +92,18 @@ Route::resource('municipalites', 'MunicipaliteController');
 Route::post('/municipalitesearch','MunicipaliteController@search')->name('municipalites.search');
 
 Route::get('/auteurmunicipalite', 'MunicipaliteController@auteurMunicipalite')->name('municipalites.role');
+
+Route::get('/importmunicipaite', 'MunicipaliteController@importMunicipalite')->name('municipalites.import');
+
+Route::post('/municipaliteexcel','MunicipaliteController@municipaliteImportedByExcel')->name('municipalites.excel');
+
+});
+
+/*Route::group(
+[
+	'prefix' => LaravelLocalization::setLocale(),
+	'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]
+], function()
+{ 
+
+});*/

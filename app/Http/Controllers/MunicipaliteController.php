@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Municipalite;
 use App\Region;
+use Excel;
+use App\Imports\MunicipaliteImport;
 
 class MunicipaliteController extends Controller
 {
@@ -194,5 +196,32 @@ class MunicipaliteController extends Controller
     public function auteurMunicipalite()
     {
         return redirect('/municipalites')->with(["errorLink" => "Vous n'avez pas le role de faire cette méthode"]);
+    }
+
+    /* méthode permet d'imprter des données à partir de fichier excel vers la BD*/
+
+    public function importMunicipalite()
+    {
+      if (auth()->user()->roles === 'admin') 
+      {
+        return view('municipalites.import');
+      }
+      elseif (auth()->user()->roles === 'user' || auth()->user()->roles === 'auteur' || auth()->user()->roles === 'superviseur')
+        {
+            return redirect('/home')->with(["errorLink" => "Vous n'avez pas le role de faire cette méthode"]);
+        }
+    }
+
+    public function municipaliteImportedByExcel(Request $request)
+    {
+      if (auth()->user()->roles === 'admin') 
+      {
+        Excel::import(new MunicipaliteImport,$request->file);
+        return redirect('/municipalites')->withSuccess("Données importées d'excel avec succès");
+      }
+      elseif (auth()->user()->roles === 'user' || auth()->user()->roles === 'auteur' || auth()->user()->roles === 'superviseur')
+        {
+            return redirect('/home')->with(["errorLink" => "Vous n'avez pas le role de faire cette méthode"]);
+        }
     }
 }
